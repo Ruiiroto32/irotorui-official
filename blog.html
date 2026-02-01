@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog - 瑠依彩斗</title>
+    <title>Blog - 瑠依彩斗 Official</title>
+    <link rel="icon" href="images/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="images/favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* CSS 共通 */
         :root { --main-blue: #42a5f5; --accent-blue: #1976d2; --bg: #e1eaf2; --card-bg: #ffffff; --text: #2c3e50; --nav-bg: #ffffff; --border: #e3f2fd; --aside-grad: linear-gradient(135deg, #bbdefb 0%, #64b5f6 100%); }
         [data-theme="dark"] { --bg: #121212; --card-bg: #1e1e1e; --text: #e0e0e0; --nav-bg: #1e1e1e; --accent-blue: #64b5f6; --border: #333; --aside-grad: linear-gradient(135deg, #0d47a1 0%, #1565c0 100%); }
         * { box-sizing: border-box; transition: 0.3s; }
@@ -47,24 +48,23 @@
         </main>
     </div>
     <script>
-        const themeBtn = document.getElementById('theme-btn');
-        const setTheme = (t) => { document.documentElement.setAttribute('data-theme', t); localStorage.setItem('theme', t); themeBtn.innerText = t === 'dark' ? '☀️' : '🌙'; };
+        const setTheme = (t) => { document.documentElement.setAttribute('data-theme', t); localStorage.setItem('theme', t); document.getElementById('theme-btn').innerText = t === 'dark' ? '☀️' : '🌙'; };
         const toggleTheme = () => setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
         setTheme(localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
 
         async function loadBlog() {
-            const container = document.getElementById('blog-container');
             const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSmx9HL3njewzgtKUquw8qDdHfnbWE5SuC_SvQwEBO_-FwYqgDHsaoUbrexL71VKmLZ_W-4Yqg9qDg0/pub?gid=557954367&single=true&output=csv";
             try {
                 const res = await fetch(url + "&t=" + Date.now());
                 const csv = await res.text();
                 const rows = csv.trim().split(/\r?\n/).slice(1);
+                const container = document.getElementById('blog-container');
                 container.innerHTML = '';
                 rows.reverse().forEach(row => {
                     const c = row.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/).map(v => v.replace(/"/g, ''));
                     container.innerHTML += `<a href="${c[2]}" class="blog-card" target="_blank"><b>${c[0]}</b><br><span style="font-size:13px; opacity:0.8;">${c[1]}</span></a>`;
                 });
-            } catch (e) { container.innerHTML = '<p>読み込み失敗</p>'; }
+            } catch (e) { document.getElementById('blog-container').innerHTML = '<p>読み込み失敗</p>'; }
         }
         loadBlog();
     </script>

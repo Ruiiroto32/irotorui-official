@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Schedule - 瑠依彩斗</title>
+    <title>Schedule - 瑠依彩斗 Official</title>
+    <link rel="icon" href="images/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="images/favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* CSS 共通 */
         :root { --main-blue: #42a5f5; --accent-blue: #1976d2; --bg: #e1eaf2; --card-bg: #ffffff; --text: #2c3e50; --nav-bg: #ffffff; --border: #e3f2fd; --aside-grad: linear-gradient(135deg, #bbdefb 0%, #64b5f6 100%); }
         [data-theme="dark"] { --bg: #121212; --card-bg: #1e1e1e; --text: #e0e0e0; --nav-bg: #1e1e1e; --accent-blue: #64b5f6; --border: #333; --aside-grad: linear-gradient(135deg, #0d47a1 0%, #1565c0 100%); }
         * { box-sizing: border-box; transition: 0.3s; }
@@ -60,18 +61,18 @@
         setTheme(localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
 
         async function fetchSched() {
-            const body = document.getElementById('sched-body');
             const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSmx9HL3njewzgtKUquw8qDdHfnbWE5SuC_SvQwEBO_-FwYqgDHsaoUbrexL71VKmLZ_W-4Yqg9qDg0/pub?gid=1574206075&single=true&output=csv";
             try {
                 const res = await fetch(url + "&t=" + Date.now());
                 const csv = await res.text();
                 const lines = csv.trim().split(/\r?\n/).slice(1);
+                const body = document.getElementById('sched-body');
                 body.innerHTML = '';
                 lines.forEach(line => {
                     const c = line.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/).map(v => v.replace(/"/g, ''));
                     body.innerHTML += `<tr><td data-label="日付">${c[0]}</td><td data-label="イベント"><b>${c[1]}</b></td><td data-label="場所">${c[2]||""}</td><td data-label="状況"><span class="badge">${c[3]||"予定"}</span></td></tr>`;
                 });
-            } catch (e) { body.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;">読み込み失敗</td></tr>'; }
+            } catch (e) { document.getElementById('sched-body').innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;">読み込み失敗</td></tr>'; }
         }
         fetchSched();
     </script>
