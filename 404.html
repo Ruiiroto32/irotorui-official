@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 Not Found - 瑠依彩斗</title>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --accent-blue: #1976d2; --bg: #e1eaf2; --card-bg: #ffffff; --text: #2c3e50; }
+        [data-theme="dark"] { --bg: #121212; --card-bg: #1e1e1e; --text: #e0e0e0; --accent-blue: #64b5f6; }
+        body { font-family: 'M PLUS Rounded 1c', sans-serif; background: var(--bg); color: var(--text); display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; text-align: center; }
+        .container { max-width: 500px; background: var(--card-bg); padding: 50px 30px; border-radius: 40px; box-shadow: 0 20px 50px rgba(0,0,0,0.1); }
+        h1 { color: var(--accent-blue); }
+        .btn { background: var(--accent-blue); color: white; padding: 12px 25px; border-radius: 20px; text-decoration: none; display: inline-block; margin-top: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div style="font-size: 50px;">🐾</div>
+        <h1>404 Not Found</h1>
+        <p>ページが見つかりませんでした。</p>
+        <a href="index.html" class="btn">ホームへ戻る</a>
+    </div>
+    <script>
+        document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');
+    </script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule - 瑠依彩斗</title>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS 共通 */
+        :root { --main-blue: #42a5f5; --accent-blue: #1976d2; --bg: #e1eaf2; --card-bg: #ffffff; --text: #2c3e50; --nav-bg: #ffffff; --border: #e3f2fd; --aside-grad: linear-gradient(135deg, #bbdefb 0%, #64b5f6 100%); }
+        [data-theme="dark"] { --bg: #121212; --card-bg: #1e1e1e; --text: #e0e0e0; --nav-bg: #1e1e1e; --accent-blue: #64b5f6; --border: #333; --aside-grad: linear-gradient(135deg, #0d47a1 0%, #1565c0 100%); }
+        * { box-sizing: border-box; transition: 0.3s; }
+        body { font-family: 'M PLUS Rounded 1c', sans-serif; background: var(--bg); margin: 0; color: var(--text); padding-top: 70px; }
+        nav { position: fixed; top: 0; left: 0; width: 100%; background: var(--nav-bg); z-index: 2000; display: flex; justify-content: center; padding: 10px 0; box-shadow: 0 2px 15px rgba(0,0,0,0.1); }
+        .nav-inner { display: flex; gap: 8px; align-items: center; }
+        .nav-item { text-decoration: none; color: var(--accent-blue); font-weight: bold; font-size: 14px; padding: 8px 15px; border-radius: 20px; }
+        .nav-item.active { background: var(--accent-blue); color: white; }
+        .theme-toggle { background: var(--bg); border: 1px solid var(--accent-blue); color: var(--accent-blue); cursor: pointer; padding: 6px 12px; border-radius: 20px; font-weight: bold; font-size: 12px; }
+        .wrapper { display: flex; max-width: 1050px; margin: 20px auto 50px; background: var(--card-bg); border-radius: 40px; overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.1); }
+        aside { width: 300px; background: var(--aside-grad); padding: 50px 30px; text-align: center; flex-shrink: 0; color: white; border-right: 1px solid var(--border); }
+        .profile-img { width: 150px; height: 150px; border-radius: 50%; border: 4px solid white; object-fit: cover; margin-bottom: 20px; }
+        main { flex-grow: 1; padding: 40px; }
+        h2 { font-size: 20px; color: var(--accent-blue); border-bottom: 2px solid var(--main-blue); padding-bottom: 8px; margin-bottom: 20px; }
+        table { width: 100%; border-collapse: collapse; }
+        th { text-align: left; padding: 12px; color: var(--accent-blue); border-bottom: 2px solid var(--border); }
+        td { padding: 15px 12px; border-bottom: 1px solid var(--border); font-size: 14px; }
+        .badge { background: var(--accent-blue); color: white; padding: 4px 10px; border-radius: 10px; font-size: 11px; font-weight: bold; }
+        @media (max-width: 850px) { .wrapper { flex-direction: column; border-radius: 0; margin: 0; } aside { width: 100%; border-right: none; }
+            table, thead, tbody, th, td, tr { display: block; } th { display: none; }
+            tr { border: 1px solid var(--border); border-radius: 15px; padding: 10px; margin-bottom: 10px; background: rgba(128,128,128,0.03); }
+            td:before { content: attr(data-label); font-weight: bold; font-size: 11px; color: #888; display: block; }
+        }
+    </style>
+</head>
+<body>
+    <nav><div class="nav-inner">
+        <a href="index.html" class="nav-item">Home</a>
+        <a href="blog.html" class="nav-item">Blog</a>
+        <a href="schedule.html" class="nav-item active">Schedule</a>
+        <a href="links.html" class="nav-item">Links</a>
+        <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">🌓</button>
+    </div></nav>
+    <div class="wrapper">
+        <aside>
+            <img src="images/icon.jpg" alt="瑠依彩斗" class="profile-img">
+            <h1 style="margin:0; font-size:22px;">瑠依彩斗</h1>
+            <p>Schedule</p>
+        </aside>
+        <main>
+            <h2>Event Schedule</h2>
+            <table>
+                <thead><tr><th>日付</th><th>イベント</th><th>場所</th><th>状況</th></tr></thead>
+                <tbody id="sched-body"><tr><td colspan="4">読み込み中...</td></tr></tbody>
+            </table>
+        </main>
+    </div>
+    <script>
+        const setTheme = (t) => { document.documentElement.setAttribute('data-theme', t); localStorage.setItem('theme', t); document.getElementById('theme-btn').innerText = t === 'dark' ? '☀️' : '🌙'; };
+        const toggleTheme = () => setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+        setTheme(localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+
+        async function fetchSched() {
+            const body = document.getElementById('sched-body');
+            const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSmx9HL3njewzgtKUquw8qDdHfnbWE5SuC_SvQwEBO_-FwYqgDHsaoUbrexL71VKmLZ_W-4Yqg9qDg0/pub?gid=1574206075&single=true&output=csv";
+            try {
+                const res = await fetch(url + "&t=" + Date.now());
+                const csv = await res.text();
+                const lines = csv.trim().split(/\r?\n/).slice(1);
+                body.innerHTML = '';
+                lines.forEach(line => {
+                    const c = line.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/).map(v => v.replace(/"/g, ''));
+                    body.innerHTML += `<tr><td data-label="日付">${c[0]}</td><td data-label="イベント"><b>${c[1]}</b></td><td data-label="場所">${c[2]||""}</td><td data-label="状況"><span class="badge">${c[3]||"予定"}</span></td></tr>`;
+                });
+            } catch (e) { body.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;">読み込み失敗</td></tr>'; }
+        }
+        fetchSched();
+    </script>
+</body>
+</html>
