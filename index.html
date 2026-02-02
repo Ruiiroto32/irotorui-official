@@ -5,53 +5,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>瑠依彩斗 / irotoRui Official</title>
     <link rel="icon" href="images/favicon.png" type="image/png">
-    <link rel="apple-touch-icon" href="images/favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root { --main-blue: #42a5f5; --accent-blue: #1976d2; --bg: #e1eaf2; --card-bg: #ffffff; --text: #2c3e50; --nav-bg: #ffffff; --border: #e3f2fd; --aside-grad: linear-gradient(135deg, #bbdefb 0%, #64b5f6 100%); }
         [data-theme="dark"] { --bg: #121212; --card-bg: #1e1e1e; --text: #e0e0e0; --nav-bg: #1e1e1e; --accent-blue: #64b5f6; --border: #333; --aside-grad: linear-gradient(135deg, #0d47a1 0%, #1565c0 100%); }
-        * { box-sizing: border-box; transition: 0.3s; } 
-        body { font-family: 'M PLUS Rounded 1c', sans-serif; background: var(--bg); margin: 0; color: var(--text); padding-top: 70px; }
-        nav { position: fixed; top: 0; left: 0; width: 100%; background: var(--nav-bg); z-index: 2000; box-shadow: 0 2px 15px rgba(0,0,0,0.1); display: flex; justify-content: center; padding: 10px 0; }
-        .nav-inner { display: flex; gap: 8px; align-items: center; }
-        .nav-item { text-decoration: none; color: var(--accent-blue); font-weight: bold; font-size: 14px; padding: 8px 15px; border-radius: 20px; }
+        * { box-sizing: border-box; transition: 0.3s; }
+        body { font-family: 'M PLUS Rounded 1c', sans-serif; background: var(--bg); margin: 0; color: var(--text); padding-top: 110px; }
+        nav { position: fixed; top: 0; left: 0; width: 100%; background: var(--nav-bg); z-index: 2000; box-shadow: 0 2px 15px rgba(0,0,0,0.1); padding: 10px 0; }
+        .nav-inner { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+        .nav-row { display: flex; gap: 5px; flex-wrap: wrap; justify-content: center; }
+        .nav-item { text-decoration: none; color: var(--accent-blue); font-weight: bold; font-size: 13px; padding: 6px 12px; border-radius: 20px; }
         .nav-item.active { background: var(--accent-blue); color: white; }
-        .theme-toggle { background: var(--bg); border: 1px solid var(--accent-blue); color: var(--accent-blue); cursor: pointer; padding: 6px 12px; border-radius: 20px; font-weight: bold; font-size: 12px; margin-left: 5px; }
+        .lang-item { font-size: 11px; opacity: 0.8; border: 1px solid var(--accent-blue); }
+        .theme-toggle { background: var(--bg); border: 1px solid var(--accent-blue); color: var(--accent-blue); cursor: pointer; padding: 5px 10px; border-radius: 20px; font-weight: bold; font-size: 12px; }
         .wrapper { display: flex; max-width: 1050px; margin: 20px auto 50px; background: var(--card-bg); border-radius: 40px; overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.1); }
-        aside { width: 300px; background: var(--aside-grad); padding: 50px 30px; text-align: center; flex-shrink: 0; color: white; border-right: 1px solid var(--border); }
+        aside { width: 300px; background: var(--aside-grad); padding: 50px 30px; text-align: center; flex-shrink: 0; color: white; }
         .profile-img { width: 150px; height: 150px; border-radius: 50%; border: 4px solid white; object-fit: cover; margin-bottom: 20px; }
         main { flex-grow: 1; padding: 40px; }
         h2 { font-size: 20px; color: var(--accent-blue); border-bottom: 2px solid var(--main-blue); padding-bottom: 8px; margin-bottom: 20px; }
         .profile-content { background: rgba(66, 165, 245, 0.05); border-left: 4px solid var(--accent-blue); padding: 20px; border-radius: 0 20px 20px 0; line-height: 1.8; margin-bottom: 40px; }
         .news-list { background: rgba(128,128,128,0.05); border-radius: 20px; padding: 10px 20px; border: 1px solid var(--border); }
         .news-item { padding: 12px 0; border-bottom: 1px solid var(--border); display: flex; font-size: 14px; }
-        .news-item:last-child { border-bottom: none; }
         .news-date { width: 100px; font-weight: bold; color: var(--accent-blue); }
-        @media (max-width: 850px) { .wrapper { flex-direction: column; border-radius: 0; margin: 0; } aside { width: 100%; border-right: none; } }
+        @media (max-width: 850px) { body { padding-top: 130px; } .wrapper { flex-direction: column; } aside { width: 100%; } }
     </style>
 </head>
 <body>
     <nav><div class="nav-inner">
-        <a href="index.html" class="nav-item active">Home</a>
-        <a href="blog.html" class="nav-item">Blog</a>
-        <a href="schedule.html" class="nav-item">Schedule</a>
-        <a href="links.html" class="nav-item">Links</a>
-        <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">🌓</button>
+        <div class="nav-row">
+            <a href="index.html" class="nav-item active">Home</a>
+            <a href="blog.html" class="nav-item">Blog</a>
+            <a href="schedule.html" class="nav-item">Schedule</a>
+            <a href="links.html" class="nav-item">Links</a>
+            <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">🌓</button>
+        </div>
+        <div class="nav-row">
+            <a href="index.html" class="nav-item lang-item active">JP</a>
+            <a href="en/index.html" class="nav-item lang-item">EN</a>
+            <a href="ko/index.html" class="nav-item lang-item">KO</a>
+            <a href="zh/index.html" class="nav-item lang-item">ZH</a>
+        </div>
     </div></nav>
     <div class="wrapper">
         <aside>
             <img src="images/icon.jpg" alt="瑠依彩斗" class="profile-img">
-            <h1 style="margin:0; font-size:22px;">瑠依彩斗</h1>
-            <p>@irotoRui</p>
+            <h1>瑠依彩斗</h1>
+            <p>Official Site</p>
         </aside>
         <main>
-            <section><h2>About Me</h2><div id="profile-container" class="profile-content">読み込み中...</div></section>
-            <section><h2>News</h2><div id="news-container" class="news-list">読み込み中...</div></section>
+            <section>
+                <h2>About Me</h2>
+                <div id="profile-container" class="profile-content">読み込み中...</div>
+            </section>
+            <section>
+                <h2>News</h2>
+                <div id="news-container" class="news-list">読み込み中...</div>
+            </section>
         </main>
     </div>
     <script>
-        const themeBtn = document.getElementById('theme-btn');
-        const setTheme = (t) => { document.documentElement.setAttribute('data-theme', t); localStorage.setItem('theme', t); themeBtn.innerText = t === 'dark' ? '☀️' : '🌙'; };
+        const setTheme = (t) => { document.documentElement.setAttribute('data-theme', t); localStorage.setItem('theme', t); document.getElementById('theme-btn').innerText = t === 'dark' ? '☀️' : '🌙'; };
         const toggleTheme = () => setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
         setTheme(localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
         async function loadProfile() {
@@ -62,7 +75,7 @@
                 const rows = csv.trim().split(/\r?\n/);
                 const data = {};
                 rows.forEach(row => { const [k, v] = row.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/).map(s => s.replace(/"/g, '')); data[k] = v; });
-                document.getElementById('profile-container').innerHTML = `<p><strong>${data['Name']}</strong>（${data['Birthday']}）</p><p>${data['Intro']}</p><p style="font-size: 14px; opacity: 0.8; margin-top: 10px;">${data['Message']}</p>`;
+                document.getElementById('profile-container').innerHTML = `<p><strong>${data['Name']}</strong>（${data['Birthday']}）</p><p>${data['Intro']}</p>`;
             } catch (e) { document.getElementById('profile-container').innerHTML = '<p>読み込み失敗</p>'; }
         }
         async function loadNews() {
@@ -73,7 +86,10 @@
                 const rows = csv.trim().split(/\r?\n/).slice(1);
                 const container = document.getElementById('news-container');
                 container.innerHTML = '';
-                rows.reverse().forEach(row => { const c = row.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/).map(v => v.replace(/"/g, '')); container.innerHTML += `<div class="news-item"><span class="news-date">${c[0]}</span>${c[1]}</div>`; });
+                rows.reverse().forEach(row => {
+                    const c = row.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/).map(v => v.replace(/"/g, ''));
+                    container.innerHTML += `<div class="news-item"><span class="news-date">${c[0]}</span>${c[1]}</div>`;
+                });
             } catch (e) { document.getElementById('news-container').innerHTML = '<p>読み込み失敗</p>'; }
         }
         loadProfile(); loadNews();

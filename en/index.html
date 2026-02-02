@@ -6,10 +6,10 @@
     <title>irotoRui Official</title>
     <link rel="icon" href="../images/favicon.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&display=swap" rel="stylesheet">
-    <style>/* スタイルは共通（省略可能ですが完全版として記述） */
+    <style>/* スタイル共通 */
         :root { --main-blue: #42a5f5; --accent-blue: #1976d2; --bg: #e1eaf2; --card-bg: #ffffff; --text: #2c3e50; --nav-bg: #ffffff; --border: #e3f2fd; --aside-grad: linear-gradient(135deg, #bbdefb 0%, #64b5f6 100%); }
         [data-theme="dark"] { --bg: #121212; --card-bg: #1e1e1e; --text: #e0e0e0; --nav-bg: #1e1e1e; --accent-blue: #64b5f6; --border: #333; --aside-grad: linear-gradient(135deg, #0d47a1 0%, #1565c0 100%); }
-        * { box-sizing: border-box; transition: 0.3s; } 
+        * { box-sizing: border-box; transition: 0.3s; }
         body { font-family: 'M PLUS Rounded 1c', sans-serif; background: var(--bg); margin: 0; color: var(--text); padding-top: 110px; }
         nav { position: fixed; top: 0; left: 0; width: 100%; background: var(--nav-bg); z-index: 2000; box-shadow: 0 2px 15px rgba(0,0,0,0.1); padding: 10px 0; }
         .nav-inner { display: flex; flex-direction: column; align-items: center; gap: 8px; }
@@ -50,13 +50,14 @@
         <aside>
             <img src="../images/icon.jpg" alt="irotoRui" class="profile-img">
             <h1>irotoRui</h1>
+            <p>Official Site</p>
         </aside>
         <main>
             <section>
                 <h2>About Me</h2>
                 <div class="profile-content">
                     <p><strong>irotoRui</strong></p>
-                    <p>Hi! I am irotoRui, a 17-year-old creator based in Japan. I'll be turning 18 on March 12th.</p>
+                    <p>Hi! I am irotoRui, a creator based in Japan. This is my official page.</p>
                 </div>
             </section>
             <section>
@@ -81,7 +82,7 @@
                     const c = row.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/).map(v => v.replace(/"/g, ''));
                     container.innerHTML += `<div class="news-item"><span class="news-date">${c[0]}</span>${c[1]}</div>`;
                 });
-            } catch (e) { container.innerHTML = 'Loading failed.'; }
+            } catch (e) { container.innerHTML = '<p>Load failed</p>'; }
         }
         loadNews();
     </script>
