@@ -46,6 +46,7 @@
             <a href="zh/index.html" class="nav-item lang-item">ZH</a>
         </div>
     </div></nav>
+
     <div class="wrapper">
         <aside>
             <img src="images/icon.jpg" alt="瑠依彩斗" class="profile-img">
@@ -63,10 +64,18 @@
             </section>
         </main>
     </div>
+
     <script>
-        const setTheme = (t) => { document.documentElement.setAttribute('data-theme', t); localStorage.setItem('theme', t); document.getElementById('theme-btn').innerText = t === 'dark' ? '☀️' : '🌙'; };
+        // テーマ切り替え
+        const setTheme = (t) => { 
+            document.documentElement.setAttribute('data-theme', t); 
+            localStorage.setItem('theme', t); 
+            document.getElementById('theme-btn').innerText = t === 'dark' ? '☀️' : '🌙'; 
+        };
         const toggleTheme = () => setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
         setTheme(localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+
+        // プロフィール読み込み (gid=2099815047)
         async function loadProfile() {
             const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSmx9HL3njewzgtKUquw8qDdHfnbWE5SuC_SvQwEBO_-FwYqgDHsaoUbrexL71VKmLZ_W-4Yqg9qDg0/pub?gid=2099815047&single=true&output=csv";
             try {
@@ -74,10 +83,15 @@
                 const csv = await res.text();
                 const rows = csv.trim().split(/\r?\n/);
                 const data = {};
-                rows.forEach(row => { const [k, v] = row.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/).map(s => s.replace(/"/g, '')); data[k] = v; });
+                rows.forEach(row => { 
+                    const [k, v] = row.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/).map(s => s.replace(/"/g, '')); 
+                    data[k] = v; 
+                });
                 document.getElementById('profile-container').innerHTML = `<p><strong>${data['Name']}</strong>（${data['Birthday']}）</p><p>${data['Intro']}</p>`;
             } catch (e) { document.getElementById('profile-container').innerHTML = '<p>読み込み失敗</p>'; }
         }
+
+        // ニュース読み込み (gid=0)
         async function loadNews() {
             const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSmx9HL3njewzgtKUquw8qDdHfnbWE5SuC_SvQwEBO_-FwYqgDHsaoUbrexL71VKmLZ_W-4Yqg9qDg0/pub?gid=0&single=true&output=csv";
             try {
@@ -92,7 +106,9 @@
                 });
             } catch (e) { document.getElementById('news-container').innerHTML = '<p>読み込み失敗</p>'; }
         }
-        loadProfile(); loadNews();
+
+        loadProfile(); 
+        loadNews();
     </script>
 </body>
 </html>
