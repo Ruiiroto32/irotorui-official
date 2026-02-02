@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>이로토 루이 / irotoRui Official</title>
+    <title>irotoRui Official</title>
     <link rel="icon" href="../images/favicon.png" type="image/png">
-    <link rel="apple-touch-icon" href="../images/favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&display=swap" rel="stylesheet">
-    <style>
+    <style>/* スタイル共通 */
         :root { --main-blue: #42a5f5; --accent-blue: #1976d2; --bg: #e1eaf2; --card-bg: #ffffff; --text: #2c3e50; --nav-bg: #ffffff; --border: #e3f2fd; --aside-grad: linear-gradient(135deg, #bbdefb 0%, #64b5f6 100%); }
         [data-theme="dark"] { --bg: #121212; --card-bg: #1e1e1e; --text: #e0e0e0; --nav-bg: #1e1e1e; --accent-blue: #64b5f6; --border: #333; --aside-grad: linear-gradient(135deg, #0d47a1 0%, #1565c0 100%); }
         * { box-sizing: border-box; transition: 0.3s; } 
@@ -20,7 +19,7 @@
         .lang-item { font-size: 11px; opacity: 0.8; border: 1px solid var(--accent-blue); }
         .theme-toggle { background: var(--bg); border: 1px solid var(--accent-blue); color: var(--accent-blue); cursor: pointer; padding: 5px 10px; border-radius: 20px; font-weight: bold; font-size: 12px; }
         .wrapper { display: flex; max-width: 1050px; margin: 20px auto 50px; background: var(--card-bg); border-radius: 40px; overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.1); }
-        aside { width: 300px; background: var(--aside-grad); padding: 50px 30px; text-align: center; flex-shrink: 0; color: white; border-right: 1px solid var(--border); }
+        aside { width: 300px; background: var(--aside-grad); padding: 50px 30px; text-align: center; flex-shrink: 0; color: white; }
         .profile-img { width: 150px; height: 150px; border-radius: 50%; border: 4px solid white; object-fit: cover; margin-bottom: 20px; }
         main { flex-grow: 1; padding: 40px; }
         h2 { font-size: 20px; color: var(--accent-blue); border-bottom: 2px solid var(--main-blue); padding-bottom: 8px; margin-bottom: 20px; }
@@ -28,38 +27,36 @@
         .news-list { background: rgba(128,128,128,0.05); border-radius: 20px; padding: 10px 20px; border: 1px solid var(--border); }
         .news-item { padding: 12px 0; border-bottom: 1px solid var(--border); display: flex; font-size: 14px; }
         .news-date { width: 100px; font-weight: bold; color: var(--accent-blue); }
-        @media (max-width: 850px) { body { padding-top: 130px; } .wrapper { flex-direction: column; border-radius: 0; margin: 0; } aside { width: 100%; } }
+        @media (max-width: 850px) { body { padding-top: 130px; } .wrapper { flex-direction: column; } aside { width: 100%; } }
     </style>
 </head>
 <body>
-    <nav>
-        <div class="nav-inner">
-            <div class="nav-row">
-                <a href="index.html" class="nav-item active">Home</a>
-                <a href="../index.html" class="nav-item">日本語</a>
-                <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">🌓</button>
-            </div>
-            <div class="nav-row">
-                <a href="../index.html" class="nav-item lang-item">JP</a>
-                <a href="../en/index.html" class="nav-item lang-item">EN</a>
-                <a href="index.html" class="nav-item lang-item active">KO</a>
-                <a href="../zh/index.html" class="nav-item lang-item">ZH</a>
-            </div>
+    <nav><div class="nav-inner">
+        <div class="nav-row">
+            <a href="index.html" class="nav-item active">Home</a>
+            <a href="blog.html" class="nav-item">Blog</a>
+            <a href="schedule.html" class="nav-item">Schedule</a>
+            <a href="links.html" class="nav-item">Links</a>
+            <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">🌓</button>
         </div>
-    </nav>
+        <div class="nav-row">
+            <a href="../index.html" class="nav-item lang-item">JP</a>
+            <a href="../en/index.html" class="nav-item lang-item">EN</a>
+            <a href="index.html" class="nav-item lang-item active">KO</a>
+            <a href="../zh/index.html" class="nav-item lang-item">ZH</a>
+        </div>
+    </div></nav>
     <div class="wrapper">
         <aside>
             <img src="../images/icon.jpg" alt="이로토 루이" class="profile-img">
-            <h1 style="margin:0; font-size:22px;">이로토 루이</h1>
-            <p>Official Site</p>
+            <h1>이로토 루이</h1>
         </aside>
         <main>
             <section>
                 <h2>About Me</h2>
                 <div class="profile-content">
-                    <p><strong>이로토 루이 (irotoRui)</strong></p>
-                    <p>안녕하세요! 현재 일본에서 활동 중인 17세입니다. 내년 3월 12일에 18세가 됩니다.</p>
-                    <p style="font-size: 14px; opacity: 0.8; margin-top: 10px;">저의 일상과 소식을 전하는 공식 페이지입니다. 잘 부탁드립니다!</p>
+                    <p><strong>이로토 루이</strong></p>
+                    <p>안녕하세요! 일본에서 활동하고 있는 17세 창작자 이로토 루이입니다. 내년 3월 12일에 18세가 됩니다.</p>
                 </div>
             </section>
             <section>
@@ -84,7 +81,7 @@
                     const c = row.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/).map(v => v.replace(/"/g, ''));
                     container.innerHTML += `<div class="news-item"><span class="news-date">${c[0]}</span>${c[1]}</div>`;
                 });
-            } catch (e) { container.innerHTML = '뉴스를 불러오지 못했습니다.'; }
+            } catch (e) { container.innerHTML = '불러오기 실패.'; }
         }
         loadNews();
     </script>
