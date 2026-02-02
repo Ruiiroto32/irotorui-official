@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - irotoRui Official</title>
+    <link rel="icon" href="../images/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="../images/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* スタイルは日本語版と共通 */
+        :root { --main-blue: #42a5f5; --accent-blue: #1976d2; --bg: #e1eaf2; --card-bg: #ffffff; --text: #2c3e50; --nav-bg: #ffffff; --border: #e3f2fd; --aside-grad: linear-gradient(135deg, #bbdefb 0%, #64b5f6 100%); }
+        [data-theme="dark"] { --bg: #121212; --card-bg: #1e1e1e; --text: #e0e0e0; --nav-bg: #1e1e1e; --accent-blue: #64b5f6; --border: #333; --aside-grad: linear-gradient(135deg, #0d47a1 0%, #1565c0 100%); }
+        * { box-sizing: border-box; transition: 0.3s; }
+        body { font-family: 'M PLUS Rounded 1c', sans-serif; background: var(--bg); margin: 0; color: var(--text); padding-top: 110px; }
+        nav { position: fixed; top: 0; left: 0; width: 100%; background: var(--nav-bg); z-index: 2000; box-shadow: 0 2px 15px rgba(0,0,0,0.1); padding: 10px 0; }
+        .nav-inner { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+        .nav-row { display: flex; gap: 5px; flex-wrap: wrap; justify-content: center; }
+        .nav-item { text-decoration: none; color: var(--accent-blue); font-weight: bold; font-size: 13px; padding: 6px 12px; border-radius: 20px; }
+        .nav-item.active { background: var(--accent-blue); color: white; }
+        .lang-item { font-size: 11px; opacity: 0.8; border: 1px solid var(--accent-blue); }
+        .theme-toggle { background: var(--bg); border: 1px solid var(--accent-blue); color: var(--accent-blue); cursor: pointer; padding: 5px 10px; border-radius: 20px; font-weight: bold; font-size: 12px; }
+        .wrapper { display: flex; max-width: 1050px; margin: 20px auto 50px; background: var(--card-bg); border-radius: 40px; overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.1); }
+        aside { width: 300px; background: var(--aside-grad); padding: 50px 30px; text-align: center; flex-shrink: 0; color: white; border-right: 1px solid var(--border); }
+        .profile-img { width: 150px; height: 150px; border-radius: 50%; border: 4px solid white; object-fit: cover; margin-bottom: 20px; }
+        main { flex-grow: 1; padding: 40px; }
+        h2 { font-size: 20px; color: var(--accent-blue); border-bottom: 2px solid var(--main-blue); padding-bottom: 8px; margin-bottom: 20px; }
+        .blog-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .blog-card { display: block; padding: 20px; background: rgba(128,128,128,0.05); border: 1px solid var(--border); border-radius: 20px; text-decoration: none; color: inherit; }
+        .blog-card:hover { transform: translateY(-3px); border-color: var(--accent-blue); }
+        @media (max-width: 850px) { body { padding-top: 130px; } .wrapper { flex-direction: column; border-radius: 0; margin: 0; } aside { width: 100%; border-right: none; } .blog-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <nav><div class="nav-inner">
+        <div class="nav-row">
+            <a href="index.html" class="nav-item">Home</a>
+            <a href="blog.html" class="nav-item active">Blog</a>
+            <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">🌓</button>
+        </div>
+        <div class="nav-row">
+            <a href="../blog.html" class="nav-item lang-item">JP</a>
+            <a href="blog.html" class="nav-item lang-item active">EN</a>
+            <a href="../ko/blog.html" class="nav-item lang-item">KO</a>
+            <a href="../zh/blog.html" class="nav-item lang-item">ZH</a>
+        </div>
+    </div></nav>
+    <div class="wrapper">
+        <aside>
+            <img src="../images/icon.jpg" alt="irotoRui" class="profile-img">
+            <h1 style="margin:0; font-size:22px;">irotoRui</h1>
+            <p>Blog Posts</p>
+        </aside>
+        <main>
+            <h2>Blog</h2>
+            <div id="blog-container" class="blog-grid">Loading...</div>
+        </main>
+    </div>
+    <script>
+        const setTheme = (t) => { document.documentElement.setAttribute('data-theme', t); localStorage.setItem('theme', t); document.getElementById('theme-btn').innerText = t === 'dark' ? '☀️' : '🌙'; };
+        const toggleTheme = () => setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+        setTheme(localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+        async function loadBlog() {
+            const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSmx9HL3njewzgtKUquw8qDdHfnbWE5SuC_SvQwEBO_-FwYqgDHsaoUbrexL71VKmLZ_W-4Yqg9qDg0/pub?gid=557954367&single=true&output=csv";
+            try {
+                const res = await fetch(url + "&t=" + Date.now());
+                const csv = await res.text();
+                const rows = csv.trim().split(/\r?\n
