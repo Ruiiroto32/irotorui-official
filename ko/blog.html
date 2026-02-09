@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog - 이로토 루이 Official</title>
+    <title>블로그 - irotoRui Official</title>
     <link rel="icon" href="../images/favicon.png" type="image/png">
-    <link rel="apple-touch-icon" href="../images/favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root { --main-blue: #42a5f5; --accent-blue: #1976d2; --bg: #e1eaf2; --card-bg: #ffffff; --text: #2c3e50; --nav-bg: #ffffff; --border: #e3f2fd; --aside-grad: linear-gradient(135deg, #bbdefb 0%, #64b5f6 100%); }
@@ -20,14 +19,15 @@
         .lang-item { font-size: 11px; opacity: 0.8; border: 1px solid var(--accent-blue); }
         .theme-toggle { background: var(--bg); border: 1px solid var(--accent-blue); color: var(--accent-blue); cursor: pointer; padding: 5px 10px; border-radius: 20px; font-weight: bold; font-size: 12px; }
         .wrapper { display: flex; max-width: 1050px; margin: 20px auto 50px; background: var(--card-bg); border-radius: 40px; overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.1); }
-        aside { width: 300px; background: var(--aside-grad); padding: 50px 30px; text-align: center; flex-shrink: 0; color: white; border-right: 1px solid var(--border); }
+        aside { width: 300px; background: var(--aside-grad); padding: 50px 30px; text-align: center; flex-shrink: 0; color: white; }
         .profile-img { width: 150px; height: 150px; border-radius: 50%; border: 4px solid white; object-fit: cover; margin-bottom: 20px; }
         main { flex-grow: 1; padding: 40px; }
-        h2 { font-size: 20px; color: var(--accent-blue); border-bottom: 2px solid var(--main-blue); padding-bottom: 8px; margin-bottom: 20px; }
-        .blog-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .blog-card { display: block; padding: 20px; background: rgba(128,128,128,0.05); border: 1px solid var(--border); border-radius: 20px; text-decoration: none; color: inherit; }
-        .blog-card:hover { transform: translateY(-3px); border-color: var(--accent-blue); }
-        @media (max-width: 850px) { body { padding-top: 130px; } .wrapper { flex-direction: column; border-radius: 0; margin: 0; } aside { width: 100%; border-right: none; } .blog-grid { grid-template-columns: 1fr; } }
+        h2 { font-size: 24px; color: var(--accent-blue); border-bottom: 2px solid var(--main-blue); padding-bottom: 8px; margin-bottom: 20px; }
+        .blog-post { margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px dashed var(--border); }
+        .blog-date { font-size: 14px; color: var(--accent-blue); font-weight: bold; }
+        .blog-title { font-size: 20px; margin: 5px 0 15px 0; color: var(--text); }
+        .blog-content { line-height: 1.8; }
+        @media (max-width: 850px) { body { padding-top: 130px; } .wrapper { flex-direction: column; } aside { width: 100%; } }
     </style>
 </head>
 <body>
@@ -35,6 +35,8 @@
         <div class="nav-row">
             <a href="index.html" class="nav-item">Home</a>
             <a href="blog.html" class="nav-item active">Blog</a>
+            <a href="schedule.html" class="nav-item">Schedule</a>
+            <a href="links.html" class="nav-item">Links</a>
             <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">🌓</button>
         </div>
         <div class="nav-row">
@@ -44,23 +46,26 @@
             <a href="../zh/blog.html" class="nav-item lang-item">ZH</a>
         </div>
     </div></nav>
+
     <div class="wrapper">
         <aside>
-            <img src="../images/icon.jpg" alt="이로토 루이" class="profile-img">
-            <h1 style="margin:0; font-size:22px;">이로토 루이</h1>
-            <p>블로그 목록</p>
+            <img src="../images/icon.jpg" alt="irotoRui" class="profile-img">
+            <h1>irotoRui</h1>
+            <p>Korean Blog</p>
         </aside>
         <main>
-            <h2>Blog</h2>
-            <div id="blog-container" class="blog-grid">불러오는 중...</div>
+            <h2>블로그 포스트</h2>
+            <div id="blog-container">불러오는 중...</div>
         </main>
     </div>
+
     <script>
         const setTheme = (t) => { document.documentElement.setAttribute('data-theme', t); localStorage.setItem('theme', t); document.getElementById('theme-btn').innerText = t === 'dark' ? '☀️' : '🌙'; };
         const toggleTheme = () => setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
         setTheme(localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+
         async function loadBlog() {
-            const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSmx9HL3njewzgtKUquw8qDdHfnbWE5SuC_SvQwEBO_-FwYqgDHsaoUbrexL71VKmLZ_W-4Yqg9qDg0/pub?gid=557954367&single=true&output=csv";
+            const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSmx9HL3njewzgtKUquw8qDdHfnbWE5SuC_SvQwEBO_-FwYqgDHsaoUbrexL71VKmLZ_W-4Yqg9qDg0/pub?gid=1336531980&single=true&output=csv";
             try {
                 const res = await fetch(url + "&t=" + Date.now());
                 const csv = await res.text();
@@ -69,9 +74,9 @@
                 container.innerHTML = '';
                 rows.reverse().forEach(row => {
                     const c = row.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/).map(v => v.replace(/"/g, ''));
-                    container.innerHTML += `<a href="${c[2]}" class="blog-card" target="_blank"><b>${c[0]}</b><br><span style="font-size:13px; opacity:0.8;">${c[1]}</span></a>`;
+                    container.innerHTML += `<article class="blog-post"><div class="blog-date">${c[0]}</div><h3 class="blog-title">${c[1]}</h3><div class="blog-content">${c[2]}</div></article>`;
                 });
-            } catch (e) { container.innerHTML = '<p>불러오기 실패.</p>'; }
+            } catch (e) { document.getElementById('blog-container').innerHTML = '<p>불러오기 실패</p>'; }
         }
         loadBlog();
     </script>
